@@ -22,7 +22,7 @@
       <a ng-class="{selected: difficulty === 1 }" ng-click="changeFilter(1)">Easy</a>
       <a ng-class="{selected: difficulty === 2 }" ng-click="changeFilter(2)">Medium</a>
       <a ng-class="{selected: difficulty === 3 }" ng-click="changeFilter(3)">Hard</a>
-      <a ng-click="animalSearchClick()">Search by Animal</a>
+      <a ng-class="{chosen: animalSearchShow}" ng-click="animalSearchClick()">Search by Animal</a>
     </nav>
     <div class="search" ng-show="animalSearchShow">
       <input ng-model="animalFilterInput" type="text" placeholder="Animal to search by">
