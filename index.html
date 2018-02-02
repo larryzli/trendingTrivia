@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="triviaTrends">
 
 <head>
   <meta charset="utf-8">
@@ -9,68 +9,70 @@
   <link rel="shortcut icon" href="/styles/assets/crownFavicon.png">
 </head>
 
-<body>
+<body ng-controller="triviaCtrl">
   <header>
     <div></div>
     <h1>Trivia Trends</h1>
-    <button><span>+</span> Add Question</button>
+    <button ng-click="openNewModal()">
+      <span>+</span> Add Question</button>
   </header>
   <article>
     <nav>
-      <a>All Questions</a>
-      <a>Easy</a>
-      <a>Medium</a>
-      <a>Hard</a>
-      <a>Search by Animal</a>
+      <a ng-click="changeFilter()">All Questions</a>
+      <a ng-click="changeFilter(1)">Easy</a>
+      <a ng-click="changeFilter(2)">Medium</a>
+      <a ng-click="changeFilter(3)">Hard</a>
+      <a ng-click="animalSearchClick()">Search by Animal</a>
     </nav>
-    <div class="search">
-      <input type="text" placeholder="Animal to search by">
+    <div class="search" ng-show="animalSearchShow">
+      <input ng-model="animalFilterInput" type="text" placeholder="Animal to search by">
     </div>
-
     <!-- Questions go here -->
+    <trivia-card ng-repeat="trivia in triviaList | filter: animalFilterInput" question-data='trivia' edit-modal="openEditModal(id, question, animal, difficulty, correctAnswer, options)"></trivia-card>
 
   </article>
 
-  <div class="modal">
+  <div ng-show="showModal" class="modal">
     <form>
-      <h4 class="close">X</h4>
-      <span>Question</span><input type="text" ng-model="<!-- Question -->">
-      <span>Animal it's about</span><input type="text" ng-model="<!-- Animal -->">
+      <h4 class="close" ng-click="closeModal()">X</h4>
+      <span>Question</span>
+      <input type="text" ng-model="triviaQuestion">
+      <span>Animal it's about</span>
+      <input type="text" ng-model="triviaAnimal">
       <span>Difficulty</span>
       <div class="range">
-        <input type="range" min="1" max="3" ng-model="<!-- Difficulty -->">
+        <input type="range" min="1" max="3" ng-model="triviaDifficulty">
 
-        <h5>{{newQuestion.difficulty}}</h5>
+        <h5>{{triviaDifficulty}}</h5>
       </div>
       <h4>Options</h4>
       <div>
-        <input type="radio" ng-model="" value="1">
-        <input type="text" ng-model="">
+        <input type="radio" ng-model="triviaCorrectOption" value="1">
+        <input type="text" ng-model="triviaOption1">
       </div>
       <div>
-        <input type="radio" ng-model="" value="2">
-        <input type="text" ng-model="">
+        <input type="radio" ng-model="triviaCorrectOption" value="2">
+        <input type="text" ng-model="triviaOption2">
       </div>
       <div>
-        <input type="radio" ng-model="" value="3">
-        <input type="text" ng-model="">
+        <input type="radio" ng-model="triviaCorrectOption" value="3">
+        <input type="text" ng-model="triviaOption3">
       </div>
       <div>
-        <input type="radio" ng-model="" value="4">
-        <input type="text" ng-model="">
+        <input type="radio" ng-model="triviaCorrectOption" value="4">
+        <input type="text" ng-model="triviaOption4">
       </div>
-
       <!--Add question buttons-->
-      <div class="buttons">
-        <button class="green">Save Question</button>
-        <button>Cancel</button>
+      <div ng-show="newQuestion" class="buttons">
+        <button class="green" ng-click="addNewTrivia()">Save Question</button>
+        <button ng-click="closeModal()">Cancel</button>
       </div>
 
       <!--Edit & Delete question buttons-->
-      <div class="buttons">
-        <button class="red">Delete Question</button>
-        <button class="green">Save Changes</button>
-        <button>Cancel</button>
+      <div ng-show="editQuestion" class="buttons">
+        <button ng-click="deleteOldTrivia()" class="red">Delete Question</button>
+        <button ng-click="updateOldTrivia()" class="green">Save Changes</button>
+        <button ng-click="closeModal()">Cancel</button>
       </div>
 
     </form>
@@ -82,6 +84,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" charset="utf-8"></script>
   <script src="./app.js" charset="utf-8"></script>
+  <script src="./trivia/triviaCtrl.js"></script>
+  <script src="./trivia/triviaSrvc.js"></script>
+  <script src="./trivia/triviaCard.js"></script>
 </body>
 
 </html>

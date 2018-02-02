@@ -1,0 +1,27 @@
+<div class="question-wrapper" ng-class="{red: selectedAnswer !== 0 && !correct, green: selectedAnswer !== 0 && correct}">
+    <h3>{{questionData.question}}</h3>
+
+    <div ng-class="{red: questionData.difficulty === 3, yellow: questionData.difficulty === 2, green: questionData.difficulty === 1 }">
+        {{questionData.difficulty === 3 ? 'Hard' : questionData.difficulty === 2 ? 'Medium' : 'Easy'}}
+    </div>
+    <div ng-click="editModal({id: questionData._id, question: questionData.question, animal: questionData.animal, difficulty: questionData.difficulty, correctAnswer: questionData.correct_answer, options: questionData.options})"
+        class="gear">
+        <img src="./../styles/assets/gear.svg" alt="">
+    </div>
+
+    <ul>
+        <li ng-click="selectAnswer(1)" ng-class="{chosen: selectedAnswer === 1}">
+            {{questionData.options[1]}}
+        </li>
+        <li ng-click="selectAnswer(2)" ng-class="{chosen: selectedAnswer === 2}">
+            {{questionData.options[2]}}
+        </li>
+        <li ng-click="selectAnswer(3)" ng-class="{chosen: selectedAnswer === 3}">
+            {{questionData.options[3]}}
+        </li>
+        <li ng-click="selectAnswer(4)" ng-class="{chosen: selectedAnswer === 4}">
+            {{questionData.options[4]}}
+        </li>
+
+    </ul>
+</div>
