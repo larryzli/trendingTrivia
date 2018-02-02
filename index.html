@@ -28,6 +28,11 @@
       <input ng-model="animalFilterInput" type="text" placeholder="Animal to search by">
     </div>
     <!-- Questions go here -->
+    <div style="text-align: center">
+      <a ng-click="previousPage()">
+        < Previous Page</a> |
+          <a ng-click="nextPage()">Next Page > </a>
+    </div>
     <trivia-card ng-repeat="trivia in triviaList | filter: animalFilterInput" question-data='trivia' edit-modal="openEditModal(id, question, animal, difficulty, correctAnswer, options)"></trivia-card>
 
   </article>

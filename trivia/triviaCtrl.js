@@ -15,7 +15,24 @@ angular
 
         // Filter Difficulty
         $scope.changeFilter = difficulty => {
+            $scope.page = 0;
             triviaSrvc.getFilteredTrivia(difficulty).then(response => {
+                $scope.triviaList = response.data;
+            });
+        };
+        // Paging
+        $scope.page = 0;
+        $scope.nextPage = () => {
+            $scope.page = $scope.page + 1;
+            triviaSrvc.getTrivia($scope.page).then(response => {
+                $scope.triviaList = response.data;
+            });
+        };
+        $scope.previousPage = () => {
+            if ($scope.page > 0) {
+                $scope.page = $scope.page - 1;
+            }
+            triviaSrvc.getTrivia($scope.page).then(response => {
                 $scope.triviaList = response.data;
             });
         };

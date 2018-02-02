@@ -1,8 +1,14 @@
 angular.module("triviaTrends").service("triviaSrvc", function($http) {
-    this.getTrivia = () => {
-        return $http.get(
-            "https://practiceapi.devmountain.com/api/trivia/questions/"
-        );
+    this.getTrivia = page => {
+        if (!page) {
+            return $http.get(
+                "https://practiceapi.devmountain.com/api/trivia/questions/"
+            );
+        } else {
+            return $http.get(
+                `https://practiceapi.devmountain.com/api/trivia/questions?page=${page}`
+            );
+        }
     };
     this.getFilteredTrivia = difficulty => {
         if (difficulty) {
