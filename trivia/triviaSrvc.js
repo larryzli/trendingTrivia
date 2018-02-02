@@ -10,10 +10,10 @@ angular.module("triviaTrends").service("triviaSrvc", function($http) {
             );
         }
     };
-    this.getFilteredTrivia = difficulty => {
+    this.getFilteredTrivia = (difficulty, page = 0) => {
         if (difficulty) {
             return $http.get(
-                `https://practiceapi.devmountain.com/api/trivia/questions/difficulty/${difficulty}`
+                `https://practiceapi.devmountain.com/api/trivia/questions/difficulty/${difficulty}?page=${page}`
             );
         } else {
             return $http.get(

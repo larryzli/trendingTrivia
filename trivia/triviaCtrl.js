@@ -15,26 +15,43 @@ angular
 
         // Filter Difficulty
         $scope.changeFilter = difficulty => {
+            $scope.difficulty = difficulty;
             $scope.page = 0;
-            triviaSrvc.getFilteredTrivia(difficulty).then(response => {
+            triviaSrvc.getFilteredTrivia($scope.difficulty).then(response => {
                 $scope.triviaList = response.data;
             });
         };
         // Paging
         $scope.page = 0;
-        $scope.nextPage = () => {
+        $scope.nextPage = difficulty => {
             $scope.page = $scope.page + 1;
-            triviaSrvc.getTrivia($scope.page).then(response => {
-                $scope.triviaList = response.data;
-            });
+            if (!difficulty) {
+                triviaSrvc.getTrivia($scope.page).then(response => {
+                    $scope.triviaList = response.data;
+                });
+            } else {
+                triviaSrvc
+                    .getFilteredTrivia($scope.difficulty, $scope.page)
+                    .then(response => {
+                        $scope.triviaList = response.data;
+                    });
+            }
         };
-        $scope.previousPage = () => {
+        $scope.previousPage = difficulty => {
             if ($scope.page > 0) {
                 $scope.page = $scope.page - 1;
             }
-            triviaSrvc.getTrivia($scope.page).then(response => {
-                $scope.triviaList = response.data;
-            });
+            if (!difficulty) {
+                triviaSrvc.getTrivia($scope.page).then(response => {
+                    $scope.triviaList = response.data;
+                });
+            } else {
+                triviaSrvc
+                    .getFilteredTrivia($scope.difficulty, $scope.page)
+                    .then(response => {
+                        $scope.triviaList = response.data;
+                    });
+            }
         };
 
         // Modal Control

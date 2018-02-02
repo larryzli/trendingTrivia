@@ -18,10 +18,10 @@
   </header>
   <article>
     <nav>
-      <a ng-click="changeFilter()">All Questions</a>
-      <a ng-click="changeFilter(1)">Easy</a>
-      <a ng-click="changeFilter(2)">Medium</a>
-      <a ng-click="changeFilter(3)">Hard</a>
+      <a ng-class="{selected: !difficulty}" ng-click="changeFilter()">All Questions</a>
+      <a ng-class="{selected: difficulty === 1 }" ng-click="changeFilter(1)">Easy</a>
+      <a ng-class="{selected: difficulty === 2 }" ng-click="changeFilter(2)">Medium</a>
+      <a ng-class="{selected: difficulty === 3 }" ng-click="changeFilter(3)">Hard</a>
       <a ng-click="animalSearchClick()">Search by Animal</a>
     </nav>
     <div class="search" ng-show="animalSearchShow">
@@ -29,9 +29,9 @@
     </div>
     <!-- Questions go here -->
     <div style="text-align: center">
-      <a ng-click="previousPage()">
-        < Previous Page</a> |
-          <a ng-click="nextPage()">Next Page > </a>
+      <a ng-click="previousPage(difficulty)">
+        < Previous </a> | Page: {{page + 1}} |
+          <a ng-click="nextPage(difficulty)">Next > </a>
     </div>
     <trivia-card ng-repeat="trivia in triviaList | filter: animalFilterInput" question-data='trivia' edit-modal="openEditModal(id, question, animal, difficulty, correctAnswer, options)"></trivia-card>
 
