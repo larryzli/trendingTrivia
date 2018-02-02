@@ -7,9 +7,14 @@ angular.module("triviaTrends").directive("triviaCard", function() {
             editModal: "&"
         },
         controller: function($scope) {
-            $scope.selectedAnswer = 0;
+            $scope.selectedAnswer =
+                parseInt(localStorage.getItem($scope.questionData._id)) || 0;
+            if ($scope.selectedAnswer === $scope.questionData.correct_answer) {
+                $scope.correct = true;
+            }
             $scope.selectAnswer = optionNumber => {
                 $scope.selectedAnswer = optionNumber;
+                localStorage.setItem($scope.questionData._id, optionNumber);
                 if ($scope.questionData.correct_answer === optionNumber) {
                     $scope.correct = true;
                 } else {
